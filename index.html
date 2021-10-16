@@ -21,6 +21,7 @@
   <body>
     <div id="table-container">
       <h1>Patient Info</h1>
+      <p id="id-tag"> Your ID </p>
       <div id="search-bar">
         <input type="text" id="search" placeholder="Search..." onkeyup="filter()" autocomplete="off">
         <a class="btn btn-small btn-info" onClick="find()">
@@ -33,6 +34,9 @@
     	<table id="table" class="center"></table>
       <a onClick="prefill()">
         Add Random Data
+      </a>
+      <a onClick="toggleView('database')">
+        Switch Databases
       </a>
     </div>
     
@@ -48,5 +52,12 @@
       </form>
     </div>
     
+    <div id="change-database">
+      <input type="text" id="database-id">
+      <a onClick="changeDatabase()">
+        Change Database
+      </a>
+    </div>
+
     </body>
 </html>

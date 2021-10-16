@@ -32,7 +32,7 @@ input[type=submit] {
   display: inline-block;
 }
 
-h1 {
+h1, p {
   text-align: center;
 }
 

@@ -4,11 +4,15 @@ var search = document.getElementById("search")
 var form = document.getElementById("form")
 var newPatient = document.getElementById("new-patient")
 var editPatient = document.getElementById("edit-patient")
+var idtag = document.getElementById('id-tag')
+var idinput = document.getElementById('database-id')
+
 // Divs
 var divs = {
   'table': document.getElementById("table-container"),
   'add': document.getElementById("add-patient"),
-  'change': document.getElementById('change-patient')
+  'change': document.getElementById('change-patient'),
+  'database': document.getElementById('change-database')
 }
 
 var ipfs,
@@ -22,6 +26,7 @@ var keys = ["name", "email", "phone", "address", "country"]
 document.addEventListener('DOMContentLoaded', async () => {
   toggleView('table')
   await setup();
+  idtag.innerHTML = "Your ID: " + aviondb.id
 
   // Setup Table
   dbdata = await query(50)
@@ -38,7 +43,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 async function setup() {
   ipfs = await Ipfs.create({repo: "test2"});
-  aviondb = await AvionDB.init("DatabaseName", ipfs, {path: "./.aviondb"});
+  aviondb = await AvionDB.init("DatabaseName", ipfs);
   collection = await aviondb.initCollection("patients");
 }
 
@@ -92,7 +97,7 @@ function toggleView(view) {
   divs['table'].style.display = "none";
   divs['add'].style.display = "none";
   divs['change'].style.display = "none";
-
+  divs['database'].style.display = "none";
 
   divs[view].style.display = "block";
 }
@@ -146,6 +151,11 @@ async function prefill() {
   await collection.insert(prefilledData);
   dbdata = await query(100);
   setupTable(dbdata);
+}
+
+async function changeDatabase() {
+  aviondb = await AvionDB.open(idinput.value, ipfs)
+  toggleView('table')
 }
 
 // Prefilled Data
